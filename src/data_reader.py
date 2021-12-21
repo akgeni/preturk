@@ -28,10 +28,9 @@ class TextDataReader():
       concept_df = concept_df.append(temp)
   df.dropna(subset=[self.data_field], inplace=True)
   return df
-
-def print_statistics(self):
-  """Print Text  data statistics"""
-  print(f"Size of data: {self.df.shape}")
-  print(f"{self.data_field} statistics\n")
-  data_len_statistics = self.self.df[self.data_field].apply(len).describe()
-  print("\t", data_len_statistics)
+ def print_statistics(self):
+   """Print Text  data statistics"""
+   print(f"Size of data: {self.df.shape}")
+   print(f"{self.data_field} statistics\n")
+   data_len_statistics = self.self.df[self.data_field].apply(len).describe()
+   print("\t", data_len_statistics)
