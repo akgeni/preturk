@@ -10,27 +10,36 @@ from pathlib import Path
 pd.set_option("display.max_colwidth", 500)
 
 class TextDataReader():
- def __init__(self, data_path, data_field):
+ def __init__(self, data_path, data_field, label_field):
   """
   data_field: Text
   """
   self.data_path = Path(data_path)
   self.data_field = data_field
-  self.df = self.read_all_data()
+  self.df = self._read_all_data()
+  self.label_field = label_field
+
+  self.label_wightes = self.df[self.label_field].value_counts(normalize=True)
+
   
   
- def read_all_data(self):
+ def _read_all_data(self):
   """Reads all csv from given path"""
   df = pd.DataFrame()
 
-  for file in path.glob("*.csv"):
+  for file in self.data_path.glob("*.csv"):
       temp = pd.read_csv(file)
-      concept_df = concept_df.append(temp)
+      df = df.append(temp)
+      break
   df.dropna(subset=[self.data_field], inplace=True)
   return df
  def print_statistics(self):
    """Print Text  data statistics"""
    print(f"Size of data: {self.df.shape}")
-   print(f"{self.data_field} statistics\n")
-   data_len_statistics = self.self.df[self.data_field].apply(len).describe()
-   print("\t", data_len_statistics)
+   print(f"\n\n{self.data_field} statistics\n")
+   data_len_statistics = self.df[self.data_field].apply(len).describe()
+   print()
+   print(data_len_statistics)
+    
+   print("\n\nLabel Statistics\n")
+   print(self.label_wightes)
